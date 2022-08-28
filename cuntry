@@ -1,0 +1,52 @@
+
+import {React,useEffect} from "react";
+import Breadcrumbs from "../../../components/Breadcrumbs";
+import ReactTable from "react-table-v6";
+import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
+import {fetchCity_2} from "../../../redux/city_2/Actions";
+
+function City_2() {
+    const { t } = useTranslation();
+    const dispatch =useDispatch();
+    const city_2 = useSelector((state) => state.city_2Reducers.city_2);
+ 
+    console.log(city_2 && city_2)
+    
+    useEffect(() => {
+        dispatch(fetchCity_2());
+    }, [dispatch]);
+
+    return (
+        <div>
+            <Breadcrumbs main="coding" sub="general" subSub="cities_2" />
+
+            <div>
+                <ReactTable
+                    columns={[
+                        {
+                            Header: t("city arabic name"),
+                            accessor: "cityNameA",
+                        },
+                        {
+                            Header: t("city english name"),
+                            accessor: "cityNameE",
+                        },
+
+                        {
+                            Header: t("city code"),
+                            accessor: "cityCode",
+                        },
+                        {
+                            Header: "",
+                            accessor: "actions",
+                        },
+                    ]}
+                    data={city_2 && city_2}
+                />
+            </div>
+        </div>
+    );
+}
+
+export default City_2;
